@@ -1,4 +1,4 @@
-package practice_bbg;
+package Numbaseballgame;
 
 import javax.swing.*;
 import javax.swing.text.AttributeSet;

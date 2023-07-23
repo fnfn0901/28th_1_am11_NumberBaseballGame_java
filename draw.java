@@ -1,4 +1,4 @@
-package practice_bbg;
+package Numbaseballgame;
 
 public class draw {
 	

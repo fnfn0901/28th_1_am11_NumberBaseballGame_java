@@ -1,4 +1,4 @@
-package practice_bbg;
+package Numbaseballgame;
 
 import java.io.IOException;
 import java.util.Random;
