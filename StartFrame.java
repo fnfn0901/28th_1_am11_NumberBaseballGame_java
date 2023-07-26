@@ -1,48 +1,75 @@
 package Numbaseballgame;
 
-import javax.swing.*;
-import java.awt.event.*;
 
-public class StartFrame {
-	JFrame sf1;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class StartFrame extends JDialog{
+	//JFrame sf1;
 	JButton lb1;
 	JButton jb1;
+	/*
+	levelFrame lf;
+	PlayFrame pf;
+	JoinFrame joi;
+	LoginFrame log;
+	*/
 	
-	public StartFrame() {
-	sf1 = new JFrame();
-	sf1.setTitle("숫자 야구 게임");
-	sf1.setVisible(true);
-	sf1.setSize(1000,700);
-	sf1.setLocationRelativeTo(null);
-	sf1.getContentPane().setLayout(null);
+	JPanel jp1 = new JPanel();
 	
-	lb1 = new JButton("login");
-	jb1 = new JButton("join");
-	lb1.setBounds(285,500,180,50);
-	jb1.setBounds(535,500,180,50);
-	
-	sf1.getContentPane().add(lb1);
-	sf1.getContentPane().add(jb1);
-	
-	lb1.addActionListener(new ActionListener( ) {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new LoginFrame();
-			sf1.setVisible(false);
-		}
-	});
-	
-	jb1.addActionListener(new ActionListener( ) {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new JoinFrame();
-			sf1.setVisible(false);
-		}
-	});
+	public StartFrame(JFrame frame) {
+		
+		super(frame, "StartFrame", true);
+		
+		//sf1 = new JFrame();
+		
+		setVisible(false);
+		setSize(1000,700);
+		setLocationRelativeTo(null);
+		getContentPane().setLayout(null);
+		
+		jp1 = new JPanel(null); /*{
+			public void paintComponent(Graphics g) {
+				g.drawImage(backIcon.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};*/
+		add(jp1);
+		jp1.setSize(1000, 700);
+		
+		lb1 = new JButton("login");
+		jb1 = new JButton("join");
+		lb1.setBounds(285,500,180,50);
+		jb1.setBounds(535,500,180,50);
+		
+		jp1.add(lb1);
+		jp1.add(jb1);
+		
+		
+		lb1.addActionListener(new ActionListener( ) {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				//LoginFrame log = new LoginFrame();
+				setVisible(false);
+			}
+		});
+		
+		jb1.addActionListener(new ActionListener( ) {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				//JoinFrame joi = new JoinFrame();
+				setVisible(false);
+			}
+		});
 	
 	}
 	
-	//임의로 만든 클래스
+	/*
 	public class LoginFrame{
 		public LoginFrame() {
 			JFrame lg1 = new JFrame();
@@ -60,12 +87,7 @@ public class StartFrame {
 			jb1.setSize(1000,700);
 			jb1.setLocationRelativeTo(null);
 		}
-	}
+	}*/
 
-
-
-	public static void main(String[] args) {
-		new StartFrame();
-	}
 
 }

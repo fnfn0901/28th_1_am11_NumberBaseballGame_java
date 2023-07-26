@@ -15,24 +15,21 @@ import java.io.File;
 
 
 public class PlayFrame {
-	//ImageIcon backIcon = new ImageIcon("background.png");
+	static ImageIcon backIcon = new ImageIcon("일러스트46.png");
 
 	//gameEndFrame endFrame;
 	//SnowflakeBB_Image sfimage = new SnowflakeBB_Image();
 	
-	static ImageIcon backIcon = new ImageIcon();
+	//static ImageIcon backIcon = new ImageIcon();
 	
 	static Number_Image classimage = new Number_Image();
 	
 	// Frame
-	static JFrame level1f = new JFrame("Level1");
-	static gameEndFrame endFrame; ///gameTime(플레이시간)변수와 tryGame(시도횟수)변수를 넘겨줄 예정
-	
-
-	
+	JFrame level1f = new JFrame("Level1");
 	
 	static JButton back = new JButton("Back");
 	
+
 
 	static Thread timerThr;
 	
@@ -87,7 +84,10 @@ public class PlayFrame {
 	static JButton numOkB = new JButton("OK"); // 선택한 숫자 확정하는 버튼 (숫자를 모두 선택해야 활성화)
 	static JButton numDelB = new JButton("Delete"); // 선택한 숫자를 지우는 버튼
 	
-	
+	//JDialog 생성
+	LevelFrame lvf = new LevelFrame(level1f);
+	gameEndFrame endFrame = new gameEndFrame(level1f); ///gameTime(플레이시간)변수와 tryGame(시도횟수)변수를 넘겨줄 예정
+	StartFrame stf = new StartFrame(level1f);
 	
 	
 	// 기타 변수
@@ -118,9 +118,9 @@ public class PlayFrame {
 	public PlayFrame() {
 		//endFrame = new gameEndFrame(level1f);
 		
-		
+		stf.setVisible(false);
 		//endFrame = new gameEndFrame(level1f);
-		//endFrame.setVisible(false);
+		endFrame.setVisible(false);
 		
 		
 		
@@ -147,7 +147,7 @@ public class PlayFrame {
 		level1f.setLayout(null);
 		
 		//rnList = returnRN();
-		level1f.setVisible(false);
+		level1f.setVisible(true);
 		level1f.setLocationRelativeTo(null);
 		
 		
@@ -254,23 +254,38 @@ public class PlayFrame {
 		}
 		
 		tryGame = 0;
-		//initFirst(3);
+		initFirst();
 		
 		
 		timerThr.start();
 		
 	}
 	
-	static public void initFirst(int level) {
+	//static public void initFirst(int level) {
+	public void initFirst() {	
+		while(true) {
+			if(endFrame.restartB == 0) {
+				stf.setVisible(true);
+			}
+			if(endFrame.restartB == 1) {
+				break;
+			}
+			lvf.setVisible(true);
+			if (lvf.levelState == 2 | lvf.levelState == 3 | lvf.levelState == 4) {
+				break;
+			}
+		}
+		
 		// 타이머 시작
 		//timerThr.start();
 		//gameTime = 0;
+
 		
 		// 타이머 초기화
 		playPan.playTime = 0;
 		//timerThr.start();
 		
-		level_numCount = level;
+		level_numCount = lvf.levelState;
 		randomNumber = returnRN();
 		
 		tryGame = 0;
@@ -656,10 +671,12 @@ public class PlayFrame {
 					int time1 = playPan.playTime;
 					endFrame.passedTime = time1;
 					
-					endFrame.clearOrOver = 1; // game clear
+					endFrame.clearOrOver = 1; // game Clear
 					
+					//endFrame.enputResult(playPan.playTime, tryGame);
 					
-					endFrame = new gameEndFrame(level1f);
+					endFrame.textPrint();
+					
 					endFrame.setVisible(true);
 					
 					
@@ -667,9 +684,9 @@ public class PlayFrame {
 						System.out.println("restartB 눌림");
 						playPan.g2D_img.clearRect(0, 0, 500, 600);
 						playPan.repaint();
-						initFirst(level_numCount);
-						
-						
+						//initFirst(level_numCount);
+						initFirst();
+
 					}
 					else if(endFrame.endB == 1){
 						System.out.print("endB 눌림");
@@ -687,7 +704,6 @@ public class PlayFrame {
 					numDelB.setEnabled(false);
 					
 					endFrame.tryNumber = tryGame;
-					
 					int time1 = playPan.playTime;
 					endFrame.passedTime = time1;
 					
@@ -695,17 +711,16 @@ public class PlayFrame {
 					
 					//endFrame.enputResult(playPan.playTime, tryGame);
 					
+					endFrame.textPrint();
 					
-					endFrame = new gameEndFrame(level1f);
 					endFrame.setVisible(true);
 					
 					if(endFrame.restartB == 1) {
 						System.out.println("restartB 눌림");
 						playPan.g2D_img.clearRect(0, 0, 500, 600);
 						playPan.repaint();
-						initFirst(level_numCount);
-						
-						
+						//initFirst(level_numCount);
+						initFirst();
 					}
 					else if(endFrame.endB == 1){
 						System.out.print("endB 눌림");

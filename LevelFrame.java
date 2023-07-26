@@ -1,12 +1,13 @@
-
 package Numbaseballgame;
 
 import javax.swing.*;
+
+import java.awt.Graphics;
 import java.awt.event.*;
 
-public class LevelFrame {
-	JFrame lf1;
-	PlayFrame playFrame;
+public class LevelFrame extends JDialog{
+	
+	//PlayFrame playFrame;
 	
 	JButton lb1;
 	JButton lb2;
@@ -14,13 +15,34 @@ public class LevelFrame {
 	JButton rc1;
 	JButton rb1;
 	
-	public LevelFrame() {
-		lf1 = new JFrame();
-		lf1.setTitle("숫자 야구 게임");
-		lf1.setVisible(true);
-		lf1.setSize(1000,700);
-		lf1.setLocationRelativeTo(null);
-		lf1.getContentPane().setLayout(null);
+	JPanel jp1;
+	
+	JDialog jdpractice = new JDialog();
+	
+	int levelState; // 2, 3, 4
+	
+	static ImageIcon backIcon = new ImageIcon("C:\\Users\\진은빈\\eclipse-workspace\\BaseBallGame0721\\src\\BaseBallGame0721P\\img\\backImg2.png");
+	
+	public LevelFrame(JFrame frame) {
+		super(frame, "Select Level", true);
+		setVisible(false);
+		setSize(1000,700);
+		setLocationRelativeTo(null);
+		getContentPane().setLayout(null);
+		
+		
+		jp1 = new JPanel(null) {
+			public void paintComponent(Graphics g) {
+				g.drawImage(backIcon.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		
+		
+		add(jp1);
+		jp1.setSize(1000, 700);
+		
 		
 		lb1 = new JButton("Level 1");
 		lb2 = new JButton("Levle 2");
@@ -34,45 +56,48 @@ public class LevelFrame {
 		rc1.setBounds(180,470,300,50);
 		rb1.setBounds(505,470,300,50);
 		
-		lf1.getContentPane().add(lb1);
-		lf1.getContentPane().add(lb2);
-		lf1.getContentPane().add(lb3);
-		lf1.getContentPane().add(rc1);
-		lf1.getContentPane().add(rb1);
 		
-		playFrame = new PlayFrame();
+		jp1.add(lb1);
+		jp1.add(lb2);
+		jp1.add(lb3);
+		jp1.add(rc1);
+		jp1.add(rb1);
+		
+		//playFrame = new PlayFrame();
 		
 		lb1.addActionListener(new ActionListener( ) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				playFrame.level1f.setVisible(true);
-				playFrame.initFirst(2);
-				//lf1.setVisible(false);
+				//playFrame.level1f.setVisible(true);
+				//playFrame.initFirst(2);
+				levelState = 2;
+				setVisible(false);
 			}
 		});
 		lb2.addActionListener(new ActionListener( ) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//new Level2Frame();
-				playFrame.level1f.setVisible(true);
-				playFrame.initFirst(3);
-				lf1.setVisible(false);
+				//playFrame.level1f.setVisible(true);
+				//playFrame.initFirst(3);
+				levelState = 3;
+				setVisible(false);
 			}
 		});
 		lb3.addActionListener(new ActionListener( ) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//new Level3Frame();
-				playFrame.level1f.setVisible(true);
-				playFrame.initFirst(4);
-				lf1.setVisible(false);
+				//playFrame.level1f.setVisible(true);
+				//playFrame.initFirst(4);
+				levelState = 4;
+				setVisible(false);
 			}
 		});
 		rc1.addActionListener(new ActionListener( ) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new RecordCheckFrame();
-				lf1.setVisible(false);
+				//new RecordCheckFrame();
 			}
 		});
 		rb1.addActionListener(new ActionListener( ) {
@@ -83,21 +108,26 @@ public class LevelFrame {
 		});
 	}
 
+	
 	public class RecordCheckFrame{
 		public RecordCheckFrame() {
-			JFrame rc1 = new JFrame();
+			/*
+			JDialog rc1 = new JDialog();
 			rc1.setTitle("이전 기록 확인");
-			rc1.setVisible(true);
+			rc1.setVisible(false);
 			rc1.setSize(1000,700);
-			rc1.setLocationRelativeTo(null);
+			rc1.setLocationRelativeTo(null);*/
+
+			
+			
 		}
 	}
 	
 	public class RuleFrame {
 		public RuleFrame() {
-			JFrame rf1 = new JFrame();
+			JDialog rf1 = new JDialog();
 			rf1.setTitle("게임 방법");
-			rf1.setVisible(true);
+			rf1.setVisible(false);
 			rf1.setSize(400,500);
 			rf1.setLocationRelativeTo(null);
 			
