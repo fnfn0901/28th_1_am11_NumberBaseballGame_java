@@ -1,29 +1,42 @@
 package Numbaseballgame;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class gameEndFrame extends JFrame {
+public class gameEndFrame extends JDialog {
     //재시작시 이전프레임으로 돌아갈 수 있도록 프레임 저장
     private JFrame previousFrame;
 
     private String userID;
-    private double passedTime;
-    private int tryNumber;
-    private double best_passedTime;
-    private int clearOrOver;
-    private JButton restartButton;
-    private JButton levelButton;
-    private JButton endButton;
+    static int passedTime;
+    static int tryNumber;
+    static int best_passedTime;
+    static int clearOrOver;
+    static JButton restartButton;
+    static JButton levelButton;
+    static JButton endButton;
+    
+    static JLabel clearOrOverLabel;
+    static JLabel userIDLabel;
+    static JLabel passedTimeLabel;
+    static JLabel tryNumberLabel;
 
+    static JLabel bestLabel;
+    
+    int restartB = 0; // 1일 때 버튼이 눌린 것
+    int endB = 0; 
+    
     public gameEndFrame(JFrame previousFrame){
-        this.previousFrame = previousFrame;
+        //this.previousFrame = previousFrame;
 
-        setTitle("게임 결과");
-        setSize(1000, 700);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setTitle("게임 결과");
+    	super(previousFrame, "게임 결과", true);
+    	setSize(1000, 700);
+    	
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // 전체 패널을 GridLayout으로 설정
@@ -31,13 +44,20 @@ public class gameEndFrame extends JFrame {
 
         // 게임 정보를 나타내는 패널
         JPanel gameInfoPanel = new JPanel(new GridLayout(5, 1));
-
+        
+        
+        System.out.println("gameEndFrame");
+        System.out.println(tryNumber);
+        System.out.println(passedTime);
+        
+        
         //게임정보 라벨들 생성
-        JLabel clearOrOverLabel= new JLabel((clearOrOver==0?"Game Over":"Game Clear"));
-        JLabel userIDLabel = new JLabel("유저 ID: "+userID);
-        JLabel passedTimeLabel = new JLabel("게임 시간: "+passedTime);
-        JLabel tryNumberLabel = new JLabel("시도 횟수: "+tryNumber);
-        JLabel bestLabel = new JLabel("최고 기록: "+best_passedTime);
+        clearOrOverLabel= new JLabel((clearOrOver==0?"Game Over":"Game Clear"));
+        userIDLabel = new JLabel("유저 ID: "+userID);
+        passedTimeLabel = new JLabel("게임 시간: "+ passedTime + "초");
+        tryNumberLabel = new JLabel("시도 횟수: "+tryNumber);
+        bestLabel = new JLabel("최고 기록: "+ best_passedTime);
+        
 
         //라벨 가운데 정렬
         clearOrOverLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -78,14 +98,21 @@ public class gameEndFrame extends JFrame {
 
         //패널 프레임에 추가
         add(mainPanel);
+        
+        
+        
 
         //재시작 버튼
         restartButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 //이전프레임 보여주고 현재 프레임 숨김
-                previousFrame.setVisible(true);
-                setVisible(false);
+                //previousFrame.setVisible(true);
+            	restartB = 1;
+            	setVisible(false);
+            	//previousFrame.initFirst();
+                //previousFrame.initFirst(previousFrame.level_numCount);
+                
             }
         });
 
@@ -93,8 +120,9 @@ public class gameEndFrame extends JFrame {
         levelButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
+            	
                 //levelFrame.java 실행
-                new levelFrame().setVisible(true);
+                //new levelFrame().setVisible(true);
                 setVisible(false);
             }
         });
@@ -104,6 +132,7 @@ public class gameEndFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e){
                 //종료
+            	endB = 1;
                 System.exit(0);
             }
         });
@@ -116,17 +145,9 @@ public class gameEndFrame extends JFrame {
             best_passedTime=passedTime;
 
             //라벨 변경
-            JLabel bestJLabel=(JLabel)((JPanel)getContentPane().getComponent(0)).getComponent(4);
-            bestJLabel.setText("최고 기록: "+best_passedTime);
+            //JLabel bestJLabel=(JLabel)((JPanel)getContentPane().getComponent(0)).getComponent(4);
+            //bestJLabel.setText("최고 기록: "+best_passedTime);
         }
     }
 
-    public static void main(String[] args){
-        SwingUtilities.invokeLater(() -> {
-            JFrame previousFrame=new JFrame();  //이전 프레임 생성, 초기화
-            //이전프레임 정보 가져오기
-            gameEndFrame frame=new gameEndFrame(previousFrame);
-            frame.setVisible(true);
-        });
-    }
 }
