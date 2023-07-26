@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class gameEndFrame extends Dialog {
+public class gameEndFrame extends JDialog {
     //재시작시 이전프레임으로 돌아갈 수 있도록 프레임 저장
     private JFrame previousFrame;
 
