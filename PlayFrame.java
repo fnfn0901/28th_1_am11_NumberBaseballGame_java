@@ -689,7 +689,7 @@ public class PlayFrame {
 					endFrame.setVisible(true);
 					
 					
-					if(endFrame.restartB == 1) {
+					if(endFrame.restartB == 1 | endFrame.restartB == 2) {
 						System.out.println("restartB 눌림");
 						playPan.g2D_img.clearRect(0, 0, 500, 600);
 						playPan.repaint();
@@ -724,7 +724,7 @@ public class PlayFrame {
 					
 					endFrame.setVisible(true);
 					
-					if(endFrame.restartB == 1) {
+					if(endFrame.restartB == 1 | endFrame.restartB == 2) {
 						System.out.println("restartB 눌림");
 						playPan.g2D_img.clearRect(0, 0, 500, 600);
 						playPan.repaint();
