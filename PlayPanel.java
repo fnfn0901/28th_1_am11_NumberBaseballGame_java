@@ -14,7 +14,7 @@ class PlayPanel extends JPanel{
 	
 	Image record;
 	
-	// PlayFrame¿¡¼­ ¹Ş¾Æ¿Ã ÇÃ·¹ÀÌ ½Ã°£
+	// PlayFrameì—ì„œ ë°›ì•„ì˜¬ í”Œë ˆì´ ì‹œê°„
 	int playTime;
 	Color colorTrans = new Color(255, 0, 0, 0);
 	
@@ -33,26 +33,25 @@ class PlayPanel extends JPanel{
 	BufferedImage bufRecord = new BufferedImage(500, 600, BufferedImage.TYPE_INT_ARGB);
 	BufferedImage bufTimer = new BufferedImage(160, 60, BufferedImage.TYPE_INT_ARGB);
 
-
 	
-	ImageIcon iistrikeBall = new ImageIcon("ÀÌ¹ÌÁö°æ·Î\\strikeBall.png");
-	ImageIcon iiballBall = new ImageIcon("ÀÌ¹ÌÁö°æ·Î\\ballBall.png");
-	ImageIcon iioutBall = new ImageIcon("ÀÌ¹ÌÁö°æ·Î\\outBall.png");
+
+	ImageIcon iistrikeBall = new ImageIcon("strikeBall.png");
+	ImageIcon iiballBall = new ImageIcon("ballBall.png");
+	ImageIcon iioutBall = new ImageIcon("outBall.png");
 	
 	Image istrikeBall = iistrikeBall.getImage();
 	Image iballBall = iiballBall.getImage();
 	Image ioutBall = iioutBall.getImage();
 	
-
 	
-	//PathÀÌ¹ÌÁö
+	//Pathì´ë¯¸ì§€
 	Number_Image classimage = new Number_Image();
 	
 		
 	public PlayPanel() {
   
 	    g2D_img = bufRecord.createGraphics();
-	    g2D_time = bufTimer.createGraphics(); // ±×·¡ÇÈ °´Ã¼¿Í ¹öÆÛÀÌ¹ÌÁö ¿¬°á // ±×·¡ÇÈ°´Ã¼ time¿¡ ±×¸®¸é bufTimer(¹öÆÛÀÌ¹ÌÁö)¿¡ ±×·ÁÁö´Â °Í
+	    g2D_time = bufTimer.createGraphics(); // ê·¸ë˜í”½ ê°ì²´ì™€ ë²„í¼ì´ë¯¸ì§€ ì—°ê²° // ê·¸ë˜í”½ê°ì²´ timeì— ê·¸ë¦¬ë©´ bufTimer(ë²„í¼ì´ë¯¸ì§€)ì— ê·¸ë ¤ì§€ëŠ” ê²ƒ
 	   
 	    for(int i=0; i<10; i++){
 	    	imgArray[i] = classimage.Number_Draw(0.8, false, Color.blue, Color.white, 2, i);
@@ -65,20 +64,20 @@ class PlayPanel extends JPanel{
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D drawRecord = (Graphics2D) g; // ±×·¡ÇÈ °´Ã¼
+		Graphics2D drawRecord = (Graphics2D) g; // ê·¸ë˜í”½ ê°ì²´
 		
 		drawRecord.drawImage(bufRecord, 0, 90, null);
 		
 		drawRecord.drawImage(bufTimer, 0, 10, null);
 	}
 	
-	// ÇÃ·¹ÀÌ½Ã°£ È­¸é¿¡ ±×¸®±â À§ÇÑ ÇÔ¼ö
+	// í”Œë ˆì´ì‹œê°„ í™”ë©´ì— ê·¸ë¦¬ê¸° ìœ„í•œ í•¨ìˆ˜
 	public void drawTimer() {
 		
 		
 		//g2D_time
-		int numDig = 0; // ¼ıÀÚ ÀÚ¸´¼ö
-		int[] numArray = new int[4]; // °¢ ÀÚ¸´¼öÀÇ ¼ıÀÚ ÀúÀåÇÒ ¹è¿­
+		int numDig = 0; // ìˆ«ì ìë¦¿ìˆ˜
+		int[] numArray = new int[4]; // ê° ìë¦¿ìˆ˜ì˜ ìˆ«ì ì €ì¥í•  ë°°ì—´
 		int temp = playTime;
 		
 		
@@ -92,7 +91,7 @@ class PlayPanel extends JPanel{
 		
 		
 		
-		// ¹öÆÛ ÀÌ¹ÌÁö Áö¿ò
+		// ë²„í¼ ì´ë¯¸ì§€ ì§€ì›€
 		g2D_time.setBackground(colorTrans);
 		g2D_time.clearRect(0, 0, 160, 60);
 		
@@ -106,11 +105,13 @@ class PlayPanel extends JPanel{
 	
 	public void drawPlayPanel(int tryCount, int[][] selectNum, int[][] saveSBO) {
 	    this.tryCount = tryCount;
+	    
+	    
 	    this.selectNum = selectNum;
 	    this.saveSBO = saveSBO;
 	    System.out.println("YES");
 	    
-	    //¹öÆÛÀÌ¹ÌÁö Áö¿ò
+	    //ë²„í¼ì´ë¯¸ì§€ ì§€ì›€
 	    g2D_img.setBackground(colorTrans);
 	    g2D_img.clearRect(0, 0, 500, 600);
 	    
