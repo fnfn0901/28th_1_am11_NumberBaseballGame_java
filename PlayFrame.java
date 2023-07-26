@@ -15,29 +15,31 @@ import java.io.File;
 
 
 public class PlayFrame {
-	//ImageIcon backIcon = new ImageIcon("¹è°æÀÌ¹ÌÁö °æ·Î");
+	//ImageIcon backIcon = new ImageIcon("background.png");
+
+	//gameEndFrame endFrame;
+	//SnowflakeBB_Image sfimage = new SnowflakeBB_Image();
 	
+	static ImageIcon backIcon = new ImageIcon();
 	
-	ImageIcon backIcon = new ImageIcon();
-	
-	Number_Image classimage = new Number_Image();
+	static Number_Image classimage = new Number_Image();
 	
 	// Frame
-	JFrame level1f = new JFrame("Level1");
-	//GameEndFrame endFrame; gameTime(ÇÃ·¹ÀÌ½Ã°£)º¯¼ö¿Í tryGame(½ÃµµÈ½¼ö)º¯¼ö¸¦ ³Ñ°ÜÁÙ ¿¹Á¤
+	static JFrame level1f = new JFrame("Level1");
+	static gameEndFrame endFrame; ///gameTime(í”Œë ˆì´ì‹œê°„)ë³€ìˆ˜ì™€ tryGame(ì‹œë„íšŸìˆ˜)ë³€ìˆ˜ë¥¼ ë„˜ê²¨ì¤„ ì˜ˆì •
 	
-	
-	// °ÔÀÓ ÇÃ·¹ÀÌ ½Ã°£ ÀúÀåÇÒ º¯¼ö
-	//int gameTime = 0;
-	// Å¸ÀÌ¸Ó º¸¿©ÁÙ ¶óº§
-	//JLabel timerLab = new JLabel(time + "SEC");
 
-	Thread timerThr;
 	
-	// ¾²·¹µå¸¦ Á¾·á½ÃÅ³ º¯¼ö
-	Boolean threadEnd = true;
 	
-	JPanel buttonPan = new JPanel(null) {
+	static JButton back = new JButton("Back");
+	
+
+	static Thread timerThr;
+	
+	// ì“°ë ˆë“œë¥¼ ì¢…ë£Œì‹œí‚¬ ë³€ìˆ˜
+	static Boolean threadEnd = true;
+	
+	static JPanel buttonPan = new JPanel(null) {
 		public void paintComponent(Graphics g) {
 			g.drawImage(backIcon.getImage(), 0, 0, null);
 			setOpaque(false);
@@ -47,7 +49,7 @@ public class PlayFrame {
 	};
 	//JPanel recordPan = new JPanel(null);
 	
-	PlayPanel playPan = new PlayPanel(){
+	static PlayPanel playPan = new PlayPanel(){
 		public void paintComponent(Graphics g) {
 			g.drawImage(backIcon.getImage(), 0, 0, null);
 			setOpaque(false);
@@ -55,69 +57,81 @@ public class PlayFrame {
 		}
 	};
 	
-	// level º¯¼ö => 2 : 2°³ ¼ıÀÚ·Î ÇÃ·¹ÀÌ / 3 : 3°³ ¼ıÀÚ·Î ÇÃ·¹ÀÌ / 4 : 4°³ ¼ıÀÚ·Î ÇÃ·¹ÀÌ
-	int level_numCount;
+	// level ë³€ìˆ˜ => 2 : 2ê°œ ìˆ«ìë¡œ í”Œë ˆì´ / 3 : 3ê°œ ìˆ«ìë¡œ í”Œë ˆì´ / 4 : 4ê°œ ìˆ«ìë¡œ í”Œë ˆì´
+	static int level_numCount;
 	
-	// ·£´ıÀ¸·Î ÁÖ¾îÁú µÎ ¼ö ÀúÀåÇÒ ¹è¿­
-	int[] randomNumber = new int[4];
+	// ëœë¤ìœ¼ë¡œ ì£¼ì–´ì§ˆ ë‘ ìˆ˜ ì €ì¥í•  ë°°ì—´
+	static int[] randomNumber = new int[4];
 
 	
-	// ·£´ıÀ¸·Î ÁÖ¾îÁú µÎ ¼ö ÀúÀåÇÒ arrayList (randomNumber)
-	ArrayList<Integer> rnList = new ArrayList<>();
+	// ëœë¤ìœ¼ë¡œ ì£¼ì–´ì§ˆ ë‘ ìˆ˜ ì €ì¥í•  arrayList (randomNumber)
+	static ArrayList<Integer> rnList = new ArrayList<>();
 	
 	
-	// ¼±ÅÃµÈ ¼ıÀÚ¸¦ ÀúÀåÇÒ ¹è¿­
-	int[] saveSelectNum = new int[4];
-	int[] saveStrikeBallOut = new int[3]; // [0] : Strike °³¼ö / [1] : Ball °³¼ö / [2] : Out °³¼ö
+	// ì„ íƒëœ ìˆ«ìë¥¼ ì €ì¥í•  ë°°ì—´
+	static int[] saveSelectNum = new int[4];
+	static int[] saveStrikeBallOut = new int[3]; // [0] : Strike ê°œìˆ˜ / [1] : Ball ê°œìˆ˜ / [2] : Out ê°œìˆ˜
 	
-	int[][] tenSelectNum = new int[10][4];
-	int[][] tenStrikeBallOut = new int[10][3];
+	static int[][] tenSelectNum = new int[10][4];
+	static int[][] tenStrikeBallOut = new int[10][3];
 	
 	
 	
-	// ÇÊ¿äÇÑ ¹öÆ°
-	//JButton[] numB = new JButton[9]; // 1~9 ¼ıÀÚ ¹öÆ°
-	JButton n1,n2,n3,n4,n5,n6,n7,n8,n9;
-
-	// n1~n9±îÁö ÀúÀåÇÒ ArrayList
-	ArrayList<JButton> numbuttonList = new ArrayList<>();
+	// í•„ìš”í•œ ë²„íŠ¼
+	//JButton[] numB = new JButton[9]; // 1~9 ìˆ«ì ë²„íŠ¼
+	static JButton n1,n2,n3,n4,n5,n6,n7,n8,n9;
+	// n1~n9ê¹Œì§€ ì €ì¥í•  ArrayList
+	static ArrayList<JButton> numbuttonList = new ArrayList<>();
 	
     
-	JButton numOkB = new JButton("OK"); // ¼±ÅÃÇÑ ¼ıÀÚ È®Á¤ÇÏ´Â ¹öÆ° (¼ıÀÚ¸¦ ¸ğµÎ ¼±ÅÃÇØ¾ß È°¼ºÈ­)
-	JButton numDelB = new JButton("Delete"); // ¼±ÅÃÇÑ ¼ıÀÚ¸¦ Áö¿ì´Â ¹öÆ°
-	
-	// °´Ã¼¸¦ ºÙÀÏ ÆĞ³Î
-	//JPanel numBPan = new JPanel(null); // ¼ıÀÚ¹öÆ° ºÙÀÏ ÆĞ³Î
+	static JButton numOkB = new JButton("OK"); // ì„ íƒí•œ ìˆ«ì í™•ì •í•˜ëŠ” ë²„íŠ¼ (ìˆ«ìë¥¼ ëª¨ë‘ ì„ íƒí•´ì•¼ í™œì„±í™”)
+	static JButton numDelB = new JButton("Delete"); // ì„ íƒí•œ ìˆ«ìë¥¼ ì§€ìš°ëŠ” ë²„íŠ¼
 	
 	
-	// ±âÅ¸ º¯¼ö
-	int selectState = 0; 
-	// ¼ıÀÚ°¡ ÃÑ ¸î°³°¡ ¼±ÅÃµÈ »óÅÂÀÎÁö¸¦ ÀúÀåÇÒ º¯¼ö
-	// 0 : 0°³ ¼±ÅÃ, 1 : 1°³ ¼±ÅÃ, 2 : 2°³ ¼±ÅÃ, 3 : 3°³ ¼±ÅÃ
-	
-	int tryGame; // °ÔÀÓÀ» ½ÃµµÇÑ È½¼ö
 	
 	
-	// ¹öÆ°°ú JLabel¿¡ ³ÖÀ» ÀÌ¹ÌÁö¾ÆÀÌÄÜ
-	ImageIcon[] imgIconBN = new ImageIcon[10];
-	ImageIcon[] imgIconBN2 = new ImageIcon[10];
+	// ê¸°íƒ€ ë³€ìˆ˜
+	static int selectState = 0; 
+	// ìˆ«ìê°€ ì´ ëª‡ê°œê°€ ì„ íƒëœ ìƒíƒœì¸ì§€ë¥¼ ì €ì¥í•  ë³€ìˆ˜
+	// 0 : 0ê°œ ì„ íƒ, 1 : 1ê°œ ì„ íƒ, 2 : 2ê°œ ì„ íƒ, 3 : 3ê°œ ì„ íƒ
 	
-
-	// ¼±ÅÃÇÑ ¼ıÀÚ º¸¿©ÁÙ JLabel
-	JLabel[] jlImg = new JLabel[4];
+	static int tryGame; // ê²Œì„ì„ ì‹œë„í•œ íšŸìˆ˜
+	
+	
+	//Image[] imgBaseballNum = new Image[10]; 
+	static ImageIcon[] imgIconBN = new ImageIcon[10];
+	static ImageIcon[] imgIconBN2 = new ImageIcon[10];
+	
+	
+	// ì´ë¯¸ì§€
+	// ìƒì„±ì ì¸ìˆ˜ : í˜„ì¬í´ë˜ìŠ¤ëª….class.getResource("/íŒ¨í‚¤ì§€ëª…/ì´ë¯¸ì§€í´ë”ëª…/ì´ë¯¸ì§€íŒŒì¼ëª…")
+	
+	
+	static JLabel[] jlImg = new JLabel[4];
+	
+	
+	//=> ìˆ˜ì • : JLabelì„ ë°°ì—´ë¡œ ì„ ì–¸í•´ì„œ ì¸ë±ìŠ¤ë²ˆí˜¸ë¥¼ selectStateë¡œ í•œ ë’¤ img ë„£ê¸°
+	//jl_n1.setBounds();
 	
 	
 	 
 	public PlayFrame() {
-		// ÀÌ¹ÌÁö¾ÆÀÌÄÜ 1~9 »ı¼º
+		//endFrame = new gameEndFrame(level1f);
+		
+		
+		//endFrame = new gameEndFrame(level1f);
+		//endFrame.setVisible(false);
+		
+		
+		
 		for(int i=0; i<9; i++){
-
+			//imgBaseballNum[i] = playPan.classimage.BBNumber_Draw(0.8, false, Color.blue, Color.white, 2, i);
 			imgIconBN[i] = new ImageIcon(playPan.classimage.BBNumber_Draw(0.8, false, Color.blue, Color.white, 4, i+1));
 			imgIconBN2[i] = new ImageIcon(playPan.classimage.BBNumber_Draw(1.2, false, Color.red, Color.white, 5, i+1));
 	   	}
 		
 		
-		// ¼±ÅÃÇÑ ¼ıÀÚ(ÃÖ´ë 4°³¾¿) * 10¹ø ÀúÀåÇÒ ¹è¿­°ú °¢ ¼±ÅÃÇÑ ¼ıÀÚÀÇ °á°ú(Strike Ball Out) 0À¸·Î ÃÊ±âÈ­
+		
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0 ; j < 4; j++) {
 				tenSelectNum[i][j] = 0;
@@ -128,26 +142,33 @@ public class PlayFrame {
 			}
 		}
 		
-		// Frame ¼³Á¤
+		// Frame ì„¤ì •
 		level1f.setSize(1000, 700);
 		level1f.setLayout(null);
 		
 		//rnList = returnRN();
 		level1f.setVisible(false);
-
+		level1f.setLocationRelativeTo(null);
+		
+		
+		// saveSelectNum ë°°ì—´ ì´ˆê¸°í™” - ê°’ì´ 0ì´ë©´ ì•„ë¬´ê²ƒë„ ì„ íƒë˜ì§€ ì•Šì€ ìƒíƒœ
 		
 		
 		level1f.add(buttonPan);
 		buttonPan.setBounds(0, 0, 500, 700);
 		
 		
-		// ±â·Ï º¸¿©ÁÙ Panel
+		//GameEndFrame ìƒì„±
+		//endFrame = new gameEndFrame(level1f);
+		
+		
+		// ê¸°ë¡ ë³´ì—¬ì¤„ Panel
 		level1f.add(playPan);
 		playPan.setBounds(500, 0, 500, 700);
 		playPan.setBackground(Color.GREEN);
 		
 		
-		// timer ¼³Á¤
+		// timer ì„¤ì •
 		//timerLab.setSize(200, 100);
 		//timerLab.setFont(new Font("Serif", Font.BOLD, 30));
 		//timerLab.setBounds(50, 50, 200, 100);
@@ -156,7 +177,7 @@ public class PlayFrame {
 		timerThr = new Thread(new TimerThread());
 	
 		
-		/*¹öÆ° ¸ğ¾ç ¾ß±¸°ø*/
+		/*ë²„íŠ¼ ëª¨ì–‘ ì•¼êµ¬ê³µ*/
 		
 		n1 = new JButton(imgIconBN[0]);
 		n2 = new JButton(imgIconBN[1]);
@@ -168,7 +189,7 @@ public class PlayFrame {
 		n8 = new JButton(imgIconBN[7]);
 		n9 = new JButton(imgIconBN[8]);
 		
-		//n1.setBorderPainted(false); // ¿Ü°û¼± ¾ø¾Ö±â
+		//n1.setBorderPainted(false); // ì™¸ê³½ì„  ì—†ì• ê¸°
 		
 	
 		numbuttonList.add(n1);
@@ -182,8 +203,8 @@ public class PlayFrame {
 		numbuttonList.add(n9);
 		
 		for (JButton numbutton : numbuttonList) {
-			numbutton.setBorderPainted(false); // ¿Ü°û¼± ¾ø¾Ö±â
-			numbutton.setContentAreaFilled(false); // Åõ¸íÇÏ°Ô
+			numbutton.setBorderPainted(false); // ì™¸ê³½ì„  ì—†ì• ê¸°
+			numbutton.setContentAreaFilled(false); // íˆ¬ëª…í•˜ê²Œ
 		}
 		
 		
@@ -198,10 +219,11 @@ public class PlayFrame {
 		n9.setBounds(250, 500, 100, 100);
 		
 		
-		// numButtonEvent µî·Ï
+		// numButtonEvent ë“±ë¡
 		for (JButton numbutton : numbuttonList) {
 			numbutton.addActionListener(new numButtonEvent());
 		}
+		
 		
 		buttonPan.add(n1);
 		buttonPan.add(n2);
@@ -226,29 +248,46 @@ public class PlayFrame {
 		numDelB.setEnabled(false);
 	
 		
-		// IMG³Ö´Â JLabel »ı¼º
+		// IMGë„£ëŠ” JLabel ìƒì„±
 		for (int i = 0; i<4;i++) {
 			jlImg[i] = new JLabel("None", JLabel.CENTER);
 		}
 		
 		tryGame = 0;
-
+		//initFirst(3);
 		
 		
 		timerThr.start();
 		
 	}
 	
-	public void initFirst(int level) {
+	static public void initFirst(int level) {
+		// íƒ€ì´ë¨¸ ì‹œì‘
+		//timerThr.start();
+		//gameTime = 0;
 		
-		
-		// Å¸ÀÌ¸Ó ÃÊ±âÈ­
+		// íƒ€ì´ë¨¸ ì´ˆê¸°í™”
 		playPan.playTime = 0;
+		//timerThr.start();
 		
 		level_numCount = level;
 		randomNumber = returnRN();
 		
-	
+		tryGame = 0;
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0 ; j < 4; j++) {
+				tenSelectNum[i][j] = 0;
+			}
+			for (int k = 0; k < 3; k++) {
+
+				tenStrikeBallOut[i][k] = 0;
+			}
+		}
+		//playPan.drawPlayPanel(tryGame, tenSelectNum, tenStrikeBallOut);
+		//playPan.repaint();
+		
+		
+		// ì¶”í›„ ìˆ˜ì •
 		for(int i = 0; i < level_numCount ; i++) {
 			saveSelectNum[i] = 0;
 		}
@@ -278,14 +317,12 @@ public class PlayFrame {
 			jlImg[i].setOpaque(true); 
 			level1f.add(jlImg[i]);
 			
-			
 		}
 		
 		init();
 	}
-
-	// nÂ÷ ½Ãµµ ÈÄ, numOkBÀ» ´©¸£¸é º­Æ° ¹× Ãâ·Â »óÅÂ¸¦ ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
-	public void init() {
+	// nì°¨ ì‹œë„ í›„, numOkBì„ ëˆ„ë¥´ë©´ ë²¼íŠ¼ ë° ì¶œë ¥ ìƒíƒœë¥¼ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
+	static public void init() {
 		selectState = 0;
 		tryGame += 1;
 		numbuttonOpen();
@@ -299,8 +336,8 @@ public class PlayFrame {
 	}
 	
 	
-	// ÄÄÇ»ÅÍ°¡ ¼­·Î ´Ù¸¥ ¼ö¸¦ ÁöÁ¤ÇÏ¿© ¸®ÅÏÇÏ´Â ÇÔ¼ö
-	public int[] returnRN() {
+	// ì»´í“¨í„°ê°€ ì„œë¡œ ë‹¤ë¥¸ ìˆ˜ë¥¼ ì§€ì •í•˜ì—¬ ë¦¬í„´í•˜ëŠ” í•¨ìˆ˜
+	static public int[] returnRN() {
 		//ArrayList<Integer> rnList = new ArrayList<>();
 		while(rnList.size()< level_numCount) {
 			Random random = new Random();
@@ -316,7 +353,7 @@ public class PlayFrame {
 	
 	}
 	
-	// ÄÄÇ»ÅÍ¿¡¼­ ÁöÁ¤ÇÑ ·£´ıÇÑ µÎ¼ö¿Í ºñ±³ÇÏ´Â ÇÔ¼ö
+	// ì»´í“¨í„°ì—ì„œ ì§€ì •í•œ ëœë¤í•œ ë‘ìˆ˜ì™€ ë¹„êµí•˜ëŠ” í•¨ìˆ˜
 	public void inputResult() {
 		int countS = 0;
 		int countB = 0; 
@@ -356,9 +393,9 @@ public class PlayFrame {
 		
 	}
 	
-	// ºñ±³ °á°ú¸¦ È­¸é¿¡ Ãâ·ÂÇÏ´Â ÇÔ¼ö // ¼öÁ¤
+	// ë¹„êµ ê²°ê³¼ë¥¼ í™”ë©´ì— ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜ // ìˆ˜ì •
 	public void printResult() {
-		System.out.print(tryGame + "È¸Â÷ | ");
+		System.out.print(tryGame + "íšŒì°¨ | ");
 		for (int i = 0; i < level_numCount ; i++) {
 			System.out.print(saveSelectNum[i] + " ");
 		}
@@ -367,7 +404,7 @@ public class PlayFrame {
 	}
 	
 		
-	// n1 ~ n9 ¹öÆ°À» ¸ğµÎ ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö
+	// n1 ~ n9 ë²„íŠ¼ì„ ëª¨ë‘ ë¹„í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
 	public void numbuttonClose() {
 		for (JButton numbutton : numbuttonList) {
 			numbutton.setEnabled(false);
@@ -375,13 +412,13 @@ public class PlayFrame {
 		}
 	}
 	
-	// numOkB ¹öÆ°À» È°¼ºÈ­ÇÏ´Â ÇÔ¼ö
+	// numOkB ë²„íŠ¼ì„ í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
 	public void numOkBOpen() {
 		numOkB.setEnabled(true);
 	}
 	
-	// numDelB ¹öÆ°À» ¼±ÅÃÇÒ ¶§ ºñÈ°¼ºÈ­ µÈ ¹öÆ°À» ´Ù½Ã È°¼ºÈ­ÇÏ´Â ÇÔ¼ö
-	public void numbuttonOpen() {
+	// numDelB ë²„íŠ¼ì„ ì„ íƒí•  ë•Œ ë¹„í™œì„±í™” ëœ ë²„íŠ¼ì„ ë‹¤ì‹œ í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
+	static public void numbuttonOpen() {
 		
 		if (selectState == 0) {
 			for (JButton numbutton : numbuttonList) {
@@ -431,25 +468,25 @@ public class PlayFrame {
 
 		
 	}
-	// n1~n9 Å¬¸¯ÇßÀ» ¶§ ¼±ÅÃÇÑ ¼ıÀÚ¸¦ È­¸é¿¡ Ãâ·ÂÇÏ´Â ÀÌº¥Æ®
+	// n1~n9 í´ë¦­í–ˆì„ ë•Œ ì„ íƒí•œ ìˆ«ìë¥¼ í™”ë©´ì— ì¶œë ¥í•˜ëŠ” ì´ë²¤íŠ¸
 	
 	
 	
 	
 	
 	
-	// ÀÌº¥Æ® ÇÔ¼ö
+	// ì´ë²¤íŠ¸ í•¨ìˆ˜
 	class numButtonEvent implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			numDelB.setEnabled(true);
 			if (e.getSource() == n1) {
-				//System.out.println("Before selectState : " + selectState + "°³ ¼±ÅÃ");
+				//System.out.println("Before selectState : " + selectState + "ê°œ ì„ íƒ");
 				saveSelectNum[selectState] = 1;
 				
 				//System.out.println("selected 1");
 				jlImg[selectState].setIcon(imgIconBN2[0]);
 				selectState += 1;
-				//System.out.println("Now selectState : " + selectState + "°³ ¼±ÅÃ");
+				//System.out.println("Now selectState : " + selectState + "ê°œ ì„ íƒ");
 				n1.setEnabled(false);
 				if (selectState == level_numCount) {
 					numbuttonClose();
@@ -556,7 +593,7 @@ public class PlayFrame {
 	}
 	
 	
-	// numDelB¸¦ Å¬¸¯ÇßÀ» ¶§ ¼±ÅÃµÈ ¼ıÀÚ¸¦ È­¸é¿¡¼­ Áö¿ì´Â ÀÌº¥Æ®
+	// numDelBë¥¼ í´ë¦­í–ˆì„ ë•Œ ì„ íƒëœ ìˆ«ìë¥¼ í™”ë©´ì—ì„œ ì§€ìš°ëŠ” ì´ë²¤íŠ¸
 	class numDelBEvent implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == numDelB) {
@@ -564,7 +601,7 @@ public class PlayFrame {
 				selectState -= 1;
 				jlImg[selectState].setIcon(null);
 				
-				// numDelB¸¦ ´­·¶À» ¶§ numOkB¸¦ ´Ù½Ã ºñÈ°¼ºÈ­
+				// numDelBë¥¼ ëˆŒë €ì„ ë•Œ numOkBë¥¼ ë‹¤ì‹œ ë¹„í™œì„±í™”
 				numOkB.setEnabled(false);
 				
 				numbuttonOpen();
@@ -573,7 +610,7 @@ public class PlayFrame {
 		}
 	}
 	
-	// ¼ıÀÚ¸¦ ¸ğµÎ ¼±ÅÃÇßÀ» ¶§ ¼±ÅÃÇÑ ¼ıÀÚ¸¦ È®Á¤ÇÏ°í °Ë»çÇÏ´Â ÀÌº¥Æ®
+	// ìˆ«ìë¥¼ ëª¨ë‘ ì„ íƒí–ˆì„ ë•Œ ì„ íƒí•œ ìˆ«ìë¥¼ í™•ì •í•˜ê³  ê²€ì‚¬í•˜ëŠ” ì´ë²¤íŠ¸
 	class numOkBEvent implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == numOkB) {
@@ -581,11 +618,11 @@ public class PlayFrame {
 				//System.out.println("saveSelectNum[0] : " + saveSelectNum[0]);
 				//System.out.println("saveSelectNum[1] : " + saveSelectNum[1]);
 				
-				// ÄÄÇ»ÅÍ¿¡¼­ ÁöÁ¤ÇÑ ·£´ıÇÑ µÎ¼ö¿Í ºñ±³ÇÏ´Â ÇÔ¼ö
+				// ì»´í“¨í„°ì—ì„œ ì§€ì •í•œ ëœë¤í•œ ë‘ìˆ˜ì™€ ë¹„êµí•˜ëŠ” í•¨ìˆ˜
 				inputResult();
 				printResult();
 				
-				// ½ÃµµÈ½¼ö, ¼±ÅÃÇÑ ¼ıÀÚ, ½ºÆ®¶óÀÌÅ©, º¼, ¾Æ¿ô ¿©ºÎ
+				// ì‹œë„íšŸìˆ˜, ì„ íƒí•œ ìˆ«ì, ìŠ¤íŠ¸ë¼ì´í¬, ë³¼, ì•„ì›ƒ ì—¬ë¶€
 				//playPan.inputTryCount(tryGame);
 				//playPan.inputSelectNum(saveSelectNum);
 				//playPan.inputSBO(saveStrikeBallOut);
@@ -602,32 +639,82 @@ public class PlayFrame {
 				playPan.drawPlayPanel(tryGame, tenSelectNum, tenStrikeBallOut);
 				playPan.repaint();
 				
-				// ¸ğµÎ Strike°¡ µÇ¾úÀ» ¶§ Á¾·á
+				
 				if (tenStrikeBallOut[tryGame-1][0] == level_numCount) {
 					////GameEndFrame endFrame = new GameEndFrame();
 					//endFrame.setVisible(true);
-					// endFrame¿¡ ½Ãµµ È½¼ö¿Í ½Ã°£ Àü´Ş
+					// endFrameì— ì‹œë„ íšŸìˆ˜ì™€ ì‹œê°„ ì „ë‹¬
+					//gameEndFrame.setVisible(true);
+					System.out.println("time : " + playPan.playTime);
+					System.out.println(tryGame);
 					System.out.println("GameClear");
 					
 					numOkB.setEnabled(false);
 					numDelB.setEnabled(false);
 					
-					threadEnd = false;
+					endFrame.tryNumber = tryGame;
+					int time1 = playPan.playTime;
+					endFrame.passedTime = time1;
+					
+					endFrame.clearOrOver = 1; // game clear
+					
+					
+					endFrame = new gameEndFrame(level1f);
+					endFrame.setVisible(true);
+					
+					
+					if(endFrame.restartB == 1) {
+						System.out.println("restartB ëˆŒë¦¼");
+						playPan.g2D_img.clearRect(0, 0, 500, 600);
+						playPan.repaint();
+						initFirst(level_numCount);
+						
+						
+					}
+					else if(endFrame.endB == 1){
+						System.out.print("endB ëˆŒë¦¼");
+						threadEnd = false;
+					}
+					
 				}
-				// 10¹ø ½ÃµµÇßÀ» ¶§ Á¾·á
 				else if (tryGame == 10) {
 					//GameOver
 					//endFrame.setVisible(true);
-					// endFrame¿¡ ½Ãµµ È½¼ö¿Í ½Ã°£ Àü´Ş
+					// endFrameì— ì‹œë„ íšŸìˆ˜ì™€ ì‹œê°„ ì „ë‹¬
 					System.out.println("GameOver");
 
 					numOkB.setEnabled(false);
 					numDelB.setEnabled(false);
 					
+					endFrame.tryNumber = tryGame;
+					
+					int time1 = playPan.playTime;
+					endFrame.passedTime = time1;
+					
+					endFrame.clearOrOver = 0; // game Over
+					
+					//endFrame.enputResult(playPan.playTime, tryGame);
+					
+					
+					endFrame = new gameEndFrame(level1f);
+					endFrame.setVisible(true);
+					
+					if(endFrame.restartB == 1) {
+						System.out.println("restartB ëˆŒë¦¼");
+						playPan.g2D_img.clearRect(0, 0, 500, 600);
+						playPan.repaint();
+						initFirst(level_numCount);
+						
+						
+					}
+					else if(endFrame.endB == 1){
+						System.out.print("endB ëˆŒë¦¼");
+						threadEnd = false;
+					}
+					
 					threadEnd = false;
 					
 				}
-				// Æ²·ÈÀ» ¶§ ´Ù½Ã ½Ãµµ
 				else {
 					init();
 				}
@@ -648,7 +735,7 @@ public class PlayFrame {
 				}
 			} catch(InterruptedException e) {
 				System.out.println("Timer interrupted and reset.");
-                //Thread.currentThread().interrupt(); // ½º·¹µå ÀÎÅÍ·´Æ® »óÅÂ¸¦ º¹±¸
+                //Thread.currentThread().interrupt(); // ìŠ¤ë ˆë“œ ì¸í„°ëŸ½íŠ¸ ìƒíƒœë¥¼ ë³µêµ¬
 				//e.printStackTrace();
 			}
 		}
