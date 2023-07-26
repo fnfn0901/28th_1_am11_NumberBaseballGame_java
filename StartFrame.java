@@ -16,6 +16,8 @@ public class StartFrame extends JDialog{
 	JoinFrame joi;
 	LoginFrame log;
 	*/
+	int login = 0; // loginButton Press => login = 1
+	int join = 0; // joinButton Press => join = 1
 	
 	JPanel jp1 = new JPanel();
 	
@@ -52,7 +54,8 @@ public class StartFrame extends JDialog{
 		lb1.addActionListener(new ActionListener( ) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				login = 1;
+				join = 0;
 				//LoginFrame log = new LoginFrame();
 				setVisible(false);
 			}
@@ -61,7 +64,9 @@ public class StartFrame extends JDialog{
 		jb1.addActionListener(new ActionListener( ) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				join = 1;
+				login = 0;
+				
 				//JoinFrame joi = new JoinFrame();
 				setVisible(false);
 			}
