@@ -1,3 +1,4 @@
+
 package Numbaseballgame;
 
 import javax.swing.*;
@@ -5,6 +6,8 @@ import java.awt.event.*;
 
 public class LevelFrame {
 	JFrame lf1;
+	PlayFrame playFrame;
+	
 	JButton lb1;
 	JButton lb2;
 	JButton lb3;
@@ -37,24 +40,31 @@ public class LevelFrame {
 		lf1.getContentPane().add(rc1);
 		lf1.getContentPane().add(rb1);
 		
+		playFrame = new PlayFrame();
+		
 		lb1.addActionListener(new ActionListener( ) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Level1Frame();
-				lf1.setVisible(false);
+				playFrame.level1f.setVisible(true);
+				playFrame.initFirst(2);
+				//lf1.setVisible(false);
 			}
 		});
 		lb2.addActionListener(new ActionListener( ) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Level2Frame();
+				//new Level2Frame();
+				playFrame.level1f.setVisible(true);
+				playFrame.initFirst(3);
 				lf1.setVisible(false);
 			}
 		});
 		lb3.addActionListener(new ActionListener( ) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Level3Frame();
+				//new Level3Frame();
+				playFrame.level1f.setVisible(true);
+				playFrame.initFirst(4);
 				lf1.setVisible(false);
 			}
 		});
@@ -73,34 +83,6 @@ public class LevelFrame {
 		});
 	}
 
-	//임의로 만든 클래스
-	public class Level1Frame{
-		public Level1Frame() {
-			JFrame lv1 = new JFrame();
-			lv1.setTitle("Level 1");
-			lv1.setVisible(true);
-			lv1.setSize(1000,700);
-			lv1.setLocationRelativeTo(null);
-		}
-	}
-	public class Level2Frame{
-		public Level2Frame() {
-			JFrame lv2 = new JFrame();
-			lv2.setTitle("Level 2");
-			lv2.setVisible(true);
-			lv2.setSize(1000,700);
-			lv2.setLocationRelativeTo(null);
-		}
-	}
-	public class Level3Frame{
-		public Level3Frame() {
-			JFrame lv3 = new JFrame();
-			lv3.setTitle("Level 3");
-			lv3.setVisible(true);
-			lv3.setSize(1000,700);
-			lv3.setLocationRelativeTo(null);
-		}
-	}
 	public class RecordCheckFrame{
 		public RecordCheckFrame() {
 			JFrame rc1 = new JFrame();
@@ -132,11 +114,6 @@ public class LevelFrame {
 			
 		}
 
-	}
-
-	
-	public static void main(String[] args) {
-		new LevelFrame();
 	}
 
 	
