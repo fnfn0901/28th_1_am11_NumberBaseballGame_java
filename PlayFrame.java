@@ -88,7 +88,8 @@ public class PlayFrame {
 	LevelFrame lvf = new LevelFrame(level1f);
 	gameEndFrame endFrame = new gameEndFrame(level1f); ///gameTime(플레이시간)변수와 tryGame(시도횟수)변수를 넘겨줄 예정
 	StartFrame stf = new StartFrame(level1f);
-	
+	//LoginFrame loginf = new LoginFrame(level1f);
+	//JoinFrame joinf = new JoinFrame(level1f);
 	
 	// 기타 변수
 	static int selectState = 0; 
@@ -266,6 +267,14 @@ public class PlayFrame {
 		while(true) {
 			if(endFrame.restartB == 0) {
 				stf.setVisible(true);
+			}
+			if (stf.login == 1){
+				System.out.println("login");
+				//loginf.setVisible(true);
+			}
+			else if(stf.join == 1){
+				System.out.println("join");
+				//joinf.setVisible(true);
 			}
 			if(endFrame.restartB == 1) {
 				break;
