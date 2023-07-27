@@ -13,30 +13,29 @@ import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import java.sql.*;
+
 
 public class PlayFrame {
-	//ImageIcon backIcon = new ImageIcon("background.png");
 
-	//gameEndFrame endFrame;
-	//SnowflakeBB_Image sfimage = new SnowflakeBB_Image();
+	JPanel panel;
 	
-	static ImageIcon backIcon = new ImageIcon();
+	static ImageIcon background = new ImageIcon("C:\\Users\\진은빈\\eclipse-workspace\\BaseBallGame_Practice\\img\\backImage3.png");
+	
+	
+	static ImageIcon backIcon = new ImageIcon("일러스트46.png");
 	
 	static Number_Image classimage = new Number_Image();
 	
 	// Frame
 	static JFrame level1f = new JFrame("Level1");
-	static gameEndFrame endFrame; ///gameTime(플레이시간)변수와 tryGame(시도횟수)변수를 넘겨줄 예정
-	
-
-	
 	
 	static JButton back = new JButton("Back");
 	
 
 	static Thread timerThr;
 	
-	// 쓰레드를 종료시킬 변수
+	// Thread stop
 	static Boolean threadEnd = true;
 	
 	static JPanel buttonPan = new JPanel(null) {
@@ -44,10 +43,8 @@ public class PlayFrame {
 			g.drawImage(backIcon.getImage(), 0, 0, null);
 			setOpaque(false);
 			super.paintComponent(g);
-			
 		}
 	};
-	//JPanel recordPan = new JPanel(null);
 	
 	static PlayPanel playPan = new PlayPanel(){
 		public void paintComponent(Graphics g) {
@@ -78,7 +75,6 @@ public class PlayFrame {
 	
 	
 	// 필요한 버튼
-	//JButton[] numB = new JButton[9]; // 1~9 숫자 버튼
 	static JButton n1,n2,n3,n4,n5,n6,n7,n8,n9;
 	// n1~n9까지 저장할 ArrayList
 	static ArrayList<JButton> numbuttonList = new ArrayList<>();
@@ -89,40 +85,44 @@ public class PlayFrame {
 	
 	
 	
-	
-	// 기타 변수
 	static int selectState = 0; 
-	// 숫자가 총 몇개가 선택된 상태인지를 저장할 변수
-	// 0 : 0개 선택, 1 : 1개 선택, 2 : 2개 선택, 3 : 3개 선택
 	
 	static int tryGame; // 게임을 시도한 횟수
 	
-	
-	//Image[] imgBaseballNum = new Image[10]; 
 	static ImageIcon[] imgIconBN = new ImageIcon[10];
 	static ImageIcon[] imgIconBN2 = new ImageIcon[10];
-	
-	
-	// 이미지
-	// 생성자 인수 : 현재클래스명.class.getResource("/패키지명/이미지폴더명/이미지파일명")
-	
 	
 	static JLabel[] jlImg = new JLabel[4];
 	
 	
-	//=> 수정 : JLabel을 배열로 선언해서 인덱스번호를 selectState로 한 뒤 img 넣기
-	//jl_n1.setBounds();
-	
-	
-	 
+	//JDialog 생성
+	LevelFrame lvf = new LevelFrame(level1f);
+	gameEndFrame endFrame = new gameEndFrame(level1f); ///gameTime(플레이시간)변수와 tryGame(시도횟수)변수를 넘겨줄 예정
+	StartFrame stf = new StartFrame(level1f);
+	Database dbd = null;
+	LoginFrame loginf;
+	JoinFrame joinf;
+		
+		
+	// 생성자 
 	public PlayFrame() {
+		// Create Database
+		dbd = new Database();
+		
 		//endFrame = new gameEndFrame(level1f);
-		
-		
+
+		stf.setVisible(false);
 		//endFrame = new gameEndFrame(level1f);
-		//endFrame.setVisible(false);
+		endFrame.setVisible(false);
 		
+		System.out.println("1");
+		loginf = new LoginFrame(level1f, this);
+		loginf.setVisible(false);
 		
+		joinf = new JoinFrame(level1f, this);
+		joinf.setVisible(false);
+				 
+		System.out.println("2");
 		
 		for(int i=0; i<9; i++){
 			//imgBaseballNum[i] = playPan.classimage.BBNumber_Draw(0.8, false, Color.blue, Color.white, 2, i);
@@ -147,7 +147,7 @@ public class PlayFrame {
 		level1f.setLayout(null);
 		
 		//rnList = returnRN();
-		level1f.setVisible(false);
+		level1f.setVisible(true);
 		level1f.setLocationRelativeTo(null);
 		
 		
@@ -246,7 +246,16 @@ public class PlayFrame {
 		buttonPan.add(numDelB);
 		numDelB.addActionListener(new numDelBEvent());
 		numDelB.setEnabled(false);
-	
+		
+		panel = new JPanel(null) {
+			public void paintComponent(Graphics g) {
+				g.drawImage(background.getImage(), 0, 0, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		level1f.add(panel);
+		panel.setSize(1000,700);
 		
 		// IMG넣는 JLabel 생성
 		for (int i = 0; i<4;i++) {
@@ -254,23 +263,54 @@ public class PlayFrame {
 		}
 		
 		tryGame = 0;
-		//initFirst(3);
+		initFirst();
 		
 		
 		timerThr.start();
 		
+		
+		
 	}
 	
-	static public void initFirst(int level) {
-		// 타이머 시작
-		//timerThr.start();
-		//gameTime = 0;
+	//static public void initFirst(int level) {
+	public void initFirst() {	
+		while(true) {
+			if(endFrame.restartB == 0) {
+				stf.setVisible(true);
+			}
+			if(stf.login == 1) {
+				System.out.println("login");
+				loginf.setVisible(true);
+			}
+			else if(stf.join == 1) {
+				System.out.println("join");
+				joinf.setVisible(true);
+			}
+			if(loginf.backStart == 1) {
+				loginf.backStart = 0;
+				stf.setVisible(true);
+			}
+			if(joinf.backStart == 1) {
+				joinf.backStart = 0;
+				stf.setVisible(true);
+			}
+			if(endFrame.restartB == 1) {
+				break;
+			}
+			
+			System.out.println("check");
+			
+			lvf.setVisible(true);
+			
+			if (lvf.levelState == 2 | lvf.levelState == 3 | lvf.levelState == 4) {
+				break;
+			}
+		}
 		
 		// 타이머 초기화
 		playPan.playTime = 0;
-		//timerThr.start();
 		
-		level_numCount = level;
+		level_numCount = lvf.levelState;
 		randomNumber = returnRN();
 		
 		tryGame = 0;
@@ -283,9 +323,6 @@ public class PlayFrame {
 				tenStrikeBallOut[i][k] = 0;
 			}
 		}
-		//playPan.drawPlayPanel(tryGame, tenSelectNum, tenStrikeBallOut);
-		//playPan.repaint();
-		
 		
 		// 추후 수정
 		for(int i = 0; i < level_numCount ; i++) {
@@ -462,13 +499,10 @@ public class PlayFrame {
 				
 			}
 			saveSelectNum[1] = 0;
-			//System.out.println("saveSelectNum[0] : " + saveSelectNum[0]);
-			//System.out.println("saveSelectNum[1] : " + saveSelectNum[1]);
 		}
 
 		
 	}
-	// n1~n9 클릭했을 때 선택한 숫자를 화면에 출력하는 이벤트
 	
 	
 	
@@ -614,18 +648,9 @@ public class PlayFrame {
 	class numOkBEvent implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == numOkB) {
-				//System.out.println("Ok");
-				//System.out.println("saveSelectNum[0] : " + saveSelectNum[0]);
-				//System.out.println("saveSelectNum[1] : " + saveSelectNum[1]);
-				
 				// 컴퓨터에서 지정한 랜덤한 두수와 비교하는 함수
 				inputResult();
 				printResult();
-				
-				// 시도횟수, 선택한 숫자, 스트라이크, 볼, 아웃 여부
-				//playPan.inputTryCount(tryGame);
-				//playPan.inputSelectNum(saveSelectNum);
-				//playPan.inputSBO(saveStrikeBallOut);
 				
 				for(int i = 0 ; i < 4; i++) {
 					tenSelectNum[tryGame-1][i] = saveSelectNum[i];
@@ -641,10 +666,7 @@ public class PlayFrame {
 				
 				
 				if (tenStrikeBallOut[tryGame-1][0] == level_numCount) {
-					////GameEndFrame endFrame = new GameEndFrame();
-					//endFrame.setVisible(true);
-					// endFrame에 시도 횟수와 시간 전달
-					//gameEndFrame.setVisible(true);
+					
 					System.out.println("time : " + playPan.playTime);
 					System.out.println(tryGame);
 					System.out.println("GameClear");
@@ -652,24 +674,45 @@ public class PlayFrame {
 					numOkB.setEnabled(false);
 					numDelB.setEnabled(false);
 					
+					String userID_inPF = "";
+					
+					if(loginf.isLoginSuccess == 1) {
+						userID_inPF = loginf.id_st;
+					}
+					else if(joinf.isJoinSuccess == 1) {
+						userID_inPF = joinf.id_st;
+					}
+					
+					endFrame.userID = userID_inPF;
+					
+					
 					endFrame.tryNumber = tryGame;
 					int time1 = playPan.playTime;
 					endFrame.passedTime = time1;
 					
-					endFrame.clearOrOver = 1; // game clear
+					System.out.println(userID_inPF);
+					dbd.dbChange(level_numCount, playPan.playTime, userID_inPF);
+					
+					int bestTime = 0;
+					bestTime = dbd.dbBestTime(level_numCount, playPan.playTime, userID_inPF);
+					endFrame.best_passedTime = bestTime;
+					System.out.println(bestTime);
 					
 					
-					endFrame = new gameEndFrame(level1f);
+					endFrame.clearOrOver = 1; 
+					
+					endFrame.textPrint();
+					
 					endFrame.setVisible(true);
 					
 					
-					if(endFrame.restartB == 1) {
+					if(endFrame.restartB == 1 | endFrame.restartB == 2) {
 						System.out.println("restartB 눌림");
 						playPan.g2D_img.clearRect(0, 0, 500, 600);
 						playPan.repaint();
-						initFirst(level_numCount);
-						
-						
+						//initFirst(level_numCount);
+						initFirst();
+
 					}
 					else if(endFrame.endB == 1){
 						System.out.print("endB 눌림");
@@ -686,8 +729,15 @@ public class PlayFrame {
 					numOkB.setEnabled(false);
 					numDelB.setEnabled(false);
 					
-					endFrame.tryNumber = tryGame;
+					if(loginf.isLoginSuccess == 1) {
+						endFrame.userID = loginf.id_st;
+					}
+					else if(joinf.isJoinSuccess == 1) {
+						endFrame.userID = joinf.id_st;
+					}
 					
+					
+					endFrame.tryNumber = tryGame;
 					int time1 = playPan.playTime;
 					endFrame.passedTime = time1;
 					
@@ -695,17 +745,16 @@ public class PlayFrame {
 					
 					//endFrame.enputResult(playPan.playTime, tryGame);
 					
+					endFrame.textPrint();
 					
-					endFrame = new gameEndFrame(level1f);
 					endFrame.setVisible(true);
 					
-					if(endFrame.restartB == 1) {
+					if(endFrame.restartB == 1 | endFrame.restartB == 2) {
 						System.out.println("restartB 눌림");
 						playPan.g2D_img.clearRect(0, 0, 500, 600);
 						playPan.repaint();
-						initFirst(level_numCount);
-						
-						
+						//initFirst(level_numCount);
+						initFirst();
 					}
 					else if(endFrame.endB == 1){
 						System.out.print("endB 눌림");
@@ -739,6 +788,15 @@ public class PlayFrame {
 				//e.printStackTrace();
 			}
 		}
+	}
+	
+	public void dbChange() {
+		
+	}
+	
+	public static void main(String[] args) {
+		PlayFrame pf = new PlayFrame();
+		
 	}
 
 

@@ -1,101 +1,118 @@
 package Numbaseballgame;
 
 import javax.swing.*;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
-public class JoinFrame extends JFrame {
-    private JTextField userID;
-    private JPasswordField userPW;
-    private JPasswordField checkPW;
-    private JButton okButton;
+public class JoinFrame extends JDialog {
+	JPanel backPanel = new JPanel(null);
+	
+	JLabel id_lab = new JLabel("ID: ");
+	JLabel pw_lab = new JLabel("PW: ");
+	
+    JTextField userID_TF = new JTextField(15);
+    JPasswordField userPW_TF = new JPasswordField(15);
+	
+	PlayFrame pf = null;
+	
+	JButton joinButton = new JButton("Join");
+	JButton backStartFrame;
+	Database dbd;
+	
+	int backStart = 0;
+	
+	String id_st;
+	String pw_st;
+	
+	int isJoinSuccess = 0;
+	
+	
+	//MainFrame mf = null;
+    public JoinFrame(JFrame playFrame, PlayFrame m) {
+    	super(playFrame, "Join", true);
+    	
+    	pf = m;
+    	
+        setSize(300, 200);
+        
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    public JoinFrame(){
-        setTitle("회원가입");
-        setSize(300,150);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel=new JPanel(new GridLayout(4,2,5,5));
-
-        JLabel userIDJLabel=new JLabel("ID:");
-        userID=new JTextField(15);
-        userID.setDocument(new NoSpaceDocument());
-
-        JLabel passwordLabel=new JLabel("PW:");
-        userPW=new JPasswordField(15);
-        userPW.setDocument(new NoSpaceDocument());
+        id_lab.setBounds(10, 10, 50, 50);
+        userID_TF.setBounds(70, 10, 150, 50);
+        pw_lab.setBounds(10, 60, 50, 50);
+        userPW_TF.setBounds(70, 60, 150, 50);
+        joinButton.setBounds(10, 120, 130, 40);
         
-        JLabel checkPWJLabel=new JLabel("비밀번호 확인");
-        checkPW=new JPasswordField(15);
+        backStartFrame = new JButton("Back");
+        backStartFrame.addActionListener(new BackButtonEvent());
+        backStartFrame.setBounds(160, 120, 130, 40);
+        
+        backPanel.setSize(300, 200);
+        add(backPanel);
+        
+        
+        
+        backPanel.add(id_lab);
+        backPanel.add(userID_TF);
+        backPanel.add(pw_lab);
+        backPanel.add(userPW_TF);
+        backPanel.add(joinButton);
+        backPanel.add(backStartFrame);
+        
+        
+        joinButton.addActionListener(new ButtonEvent());
 
-        okButton=new JButton("Sign up");
-        okButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                signUp();
-            }
-        });
-
-        panel.add(userIDJLabel);
-        panel.add(userID);
-        panel.add(passwordLabel);
-        panel.add(userPW);
-        panel.add(checkPWJLabel);
-        panel.add(checkPW);
-        panel.add(new JLabel());
-        panel.add(okButton);
-
-        add(panel);
-
-        setVisible(true);
+        add(backPanel);
+        
+        
+        dbd = new Database();
+        
+        setVisible(false);
     }
-
-    private void signUp(){
-        while(true){
-            String enterID=userID.getText();
-            String enterPW=new String(userPW.getPassword());
-            String enterCheckPW=new String(checkPW.getPassword());
-
-            //id, pw 빈칸인 경우
-            if(enterID.isEmpty()||enterPW.isEmpty()){
-                JOptionPane.showMessageDialog(this, "아이디와 비밀번호를 바르게 입력해주세요.", "회원가입 오류", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            //pw 8자리 미만인 경우
-            else if(enterPW.length()<8){
-                JOptionPane.showMessageDialog(this, "비밀번호가 8자리 미만입니다.", "회원가입 오류", JOptionPane.ERROR_MESSAGE);
-                return;
-            } 
-            //비밀번호 확인 에러
-            else if(!enterPW.equals(enterCheckPW)){
-                JOptionPane.showMessageDialog(this, "비밀번호가 일치하지 않습니다.", "회원가입 오류", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            //성공
-            else{
-                JOptionPane.showMessageDialog(this, "회원가입이 완료되었습니다.","회원가입 성공", JOptionPane.INFORMATION_MESSAGE);
-                break;
-            }
-            
-        }
+    
+    class BackButtonEvent implements ActionListener{
+    	public void actionPerformed(ActionEvent e) {
+    		if (e.getSource() == backStartFrame) {
+    			backStart = 1;
+    			setVisible(false);
+    		}
+    	}
     }
-
-    public static void main(String[] args){
-        SwingUtilities.invokeLater(()->new JoinFrame());
-    }
-}
-
-//id pw에 스페이스 들어가지 않도록 하기
-class NoSpaceDocument extends PlainDocument {
-    @Override
-    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-        if (str != null && !str.contains(" ")) {
-            super.insertString(offs, str, a);
-        }
+    
+    class ButtonEvent implements ActionListener{
+    	public void actionPerformed(ActionEvent e) {
+    		JButton b = (JButton)e.getSource();
+    		id_st = userID_TF.getText();
+    		pw_st = "";
+    		for (int i = 0; i < userPW_TF.getPassword().length;i++) {
+    			pw_st = pw_st + userPW_TF.getPassword()[i];
+    			
+    		}
+    		if(b.getText().equals("Join")) {
+    			if(id_st.equals("")||pw_st.equals("")) {
+    				JOptionPane.showMessageDialog(null, "Please write both id and password", "join failure", JOptionPane.ERROR_MESSAGE);
+    				System.out.println("Join Failure : doesn't write both id and password");
+    			}
+    			else if(!id_st.equals("")&&!pw_st.equals("")) {
+    				if (dbd.joinCheck(id_st, pw_st)) {
+    					System.out.println("Join Success");
+    					isJoinSuccess = 1;
+    					JOptionPane.showMessageDialog(null, "Welcome");
+    				}
+    				else {
+    					System.out.println("Join failure");
+    					JOptionPane.showMessageDialog(null, "join failure");
+    					userID_TF.setText("");
+    					userPW_TF.setText("");
+    				}
+    			}
+    			
+    		}
+    	}
     }
 }

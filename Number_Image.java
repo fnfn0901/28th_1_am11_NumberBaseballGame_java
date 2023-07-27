@@ -218,7 +218,7 @@ class Number_Image{
 		path_01.moveTo(62.000*ds_sc, 73.100*ds_sc);
 		path_01.quadTo(42.600*ds_sc, 40.000*ds_sc, 62.000*ds_sc, 6.900*ds_sc);
 		path_01.moveTo(17.900*ds_sc, 9.700*ds_sc);
-
+		
 		// path_02  
 		path_02.moveTo(17.800*ds_sc, 9.500*ds_sc);
 		path_02.lineTo(20.300*ds_sc, 7.900*ds_sc);
@@ -242,7 +242,7 @@ class Number_Image{
 		path_02.lineTo(29.100*ds_sc, 36.500*ds_sc);
 		path_02.moveTo(26.500*ds_sc, 40.000*ds_sc);
 		path_02.lineTo(29.600*ds_sc, 40.000*ds_sc);
-
+		
 		path_02.moveTo(17.800*ds_sc, 70.500*ds_sc);
 		path_02.lineTo(20.300*ds_sc, 72.100*ds_sc);
 		path_02.moveTo(19.400*ds_sc, 67.800*ds_sc);
@@ -263,7 +263,7 @@ class Number_Image{
 		path_02.lineTo(28.500*ds_sc, 46.900*ds_sc);
 		path_02.moveTo(26.100*ds_sc, 43.400*ds_sc);
 		path_02.lineTo(29.100*ds_sc, 43.500*ds_sc);
-
+		
 		path_02.moveTo(62.200*ds_sc, 9.500*ds_sc);
 		path_02.lineTo(59.700*ds_sc, 7.900*ds_sc);
 		path_02.moveTo(60.600*ds_sc, 12.200*ds_sc);
@@ -286,7 +286,7 @@ class Number_Image{
 		path_02.lineTo(50.900*ds_sc, 36.500*ds_sc);
 		path_02.moveTo(53.500*ds_sc, 40.000*ds_sc);
 		path_02.lineTo(50.900*ds_sc, 40.000*ds_sc);
-
+		
 		path_02.moveTo(62.200*ds_sc, 70.500*ds_sc);
 		path_02.lineTo(59.700*ds_sc, 72.100*ds_sc);
 		path_02.moveTo(60.600*ds_sc, 67.800*ds_sc);
@@ -331,7 +331,7 @@ class Number_Image{
 		path_[0].quadTo((ds_minus*31.900+ds_xmax)*ds_sc, 57.200*ds_sc, (ds_minus*40.200+ds_xmax)*ds_sc, 58.000*ds_sc);
 		path_[0].quadTo((ds_minus*48.600+ds_xmax)*ds_sc, 57.000*ds_sc, (ds_minus*48.300+ds_xmax)*ds_sc, 40.300*ds_sc);
 		path_[0].quadTo((ds_minus*47.900+ds_xmax)*ds_sc, 21.700*ds_sc, (ds_minus*39.900+ds_xmax)*ds_sc, 22.600*ds_sc);
-
+		
 		// path_[1]  
 		path_[1].moveTo((ds_minus*34.500+ds_xmax)*ds_sc, 29.500*ds_sc);
 		path_[1].lineTo((ds_minus*29.300+ds_xmax)*ds_sc, 24.800*ds_sc);
@@ -341,7 +341,7 @@ class Number_Image{
 		path_[1].lineTo((ds_minus*40.600+ds_xmax)*ds_sc, 66.200*ds_sc);
 		path_[1].lineTo((ds_minus*40.600+ds_xmax)*ds_sc, 24.600*ds_sc);
 		path_[1].closePath();
-
+		
 		// path_[2]  
 		path_[2].moveTo((ds_minus*26.200+ds_xmax)*ds_sc, 17.600*ds_sc);
 		path_[2].quadTo((ds_minus*36.300+ds_xmax)*ds_sc, 12.100*ds_sc, (ds_minus*44.900+ds_xmax)*ds_sc, 14.000*ds_sc);
@@ -355,7 +355,7 @@ class Number_Image{
 		path_[2].quadTo((ds_minus*47.500+ds_xmax)*ds_sc, 22.200*ds_sc, (ds_minus*40.500+ds_xmax)*ds_sc, 22.700*ds_sc);
 		path_[2].quadTo((ds_minus*36.000+ds_xmax)*ds_sc, 22.400*ds_sc, (ds_minus*28.500+ds_xmax)*ds_sc, 25.500*ds_sc);
 		path_[2].closePath();
-
+		
 		// path_[3]  
 		path_[3].moveTo((ds_minus*20.000+ds_xmax)*ds_sc, 10.000*ds_sc);
 		path_[3].moveTo((ds_minus*25.900+ds_xmax)*ds_sc, 16.300*ds_sc);
@@ -374,7 +374,7 @@ class Number_Image{
 		path_[3].quadTo((ds_minus*48.700+ds_xmax)*ds_sc, 26.700*ds_sc, (ds_minus*43.800+ds_xmax)*ds_sc, 23.500*ds_sc);
 		path_[3].quadTo((ds_minus*39.100+ds_xmax)*ds_sc, 20.100*ds_sc, (ds_minus*28.000+ds_xmax)*ds_sc, 24.600*ds_sc);
 		path_[3].closePath();
-
+		
 		// path_[4]  
 		path_[4].moveTo((ds_minus*44.100+ds_xmax)*ds_sc, 54.400*ds_sc);
 		path_[4].lineTo((ds_minus*22.000+ds_xmax)*ds_sc, 54.400*ds_sc);
@@ -392,7 +392,7 @@ class Number_Image{
 		path_[4].lineTo((ds_minus*30.900+ds_xmax)*ds_sc, 46.000*ds_sc);
 		path_[4].lineTo((ds_minus*44.100+ds_xmax)*ds_sc, 25.000*ds_sc);
 		path_[4].lineTo((ds_minus*44.100+ds_xmax)*ds_sc, 46.000*ds_sc);
-
+		
 		// path_[5]  
 		path_[5].moveTo((ds_minus*54.800+ds_xmax)*ds_sc, 22.000*ds_sc);
 		path_[5].lineTo((ds_minus*36.400+ds_xmax)*ds_sc, 22.000*ds_sc);
@@ -407,7 +407,7 @@ class Number_Image{
 		path_[5].lineTo((ds_minus*27.600+ds_xmax)*ds_sc, 14.200*ds_sc);
 		path_[5].lineTo((ds_minus*54.800+ds_xmax)*ds_sc, 14.300*ds_sc);
 		path_[5].closePath();
-
+		
 		// path_[6]  
 		path_[6].moveTo((ds_minus*55.200+ds_xmax)*ds_sc, 15.300*ds_sc);
 		path_[6].quadTo((ds_minus*37.000+ds_xmax)*ds_sc, 10.400*ds_sc, (ds_minus*27.400+ds_xmax)*ds_sc, 22.700*ds_sc);
@@ -424,8 +424,8 @@ class Number_Image{
 		path_[6].quadTo((ds_minus*50.100+ds_xmax)*ds_sc, 54.900*ds_sc, (ds_minus*44.300+ds_xmax)*ds_sc, 58.000*ds_sc);
 		path_[6].quadTo((ds_minus*36.700+ds_xmax)*ds_sc, 60.800*ds_sc, (ds_minus*33.600+ds_xmax)*ds_sc, 54.900*ds_sc);
 		path_[6].quadTo((ds_minus*30.300+ds_xmax)*ds_sc, 47.100*ds_sc, (ds_minus*35.800+ds_xmax)*ds_sc, 42.800*ds_sc);
-
-
+		
+		
 		// path_[7]  
 		path_[7].moveTo((ds_minus*24.800+ds_xmax)*ds_sc, 22.700*ds_sc);
 		path_[7].lineTo((ds_minus*23.700+ds_xmax)*ds_sc, 13.900*ds_sc);
@@ -435,7 +435,7 @@ class Number_Image{
 		path_[7].lineTo((ds_minus*28.100+ds_xmax)*ds_sc, 66.900*ds_sc);
 		path_[7].lineTo((ds_minus*46.800+ds_xmax)*ds_sc, 22.900*ds_sc);
 		path_[7].closePath();
-
+		
 		// path_[8]  
 		path_[8].moveTo((ds_minus*34.600+ds_xmax)*ds_sc, 39.200*ds_sc);
 		path_[8].quadTo((ds_minus*24.000+ds_xmax)*ds_sc, 34.100*ds_sc, (ds_minus*24.100+ds_xmax)*ds_sc, 26.400*ds_sc);
@@ -456,7 +456,7 @@ class Number_Image{
 		path_[8].quadTo((ds_minus*48.700+ds_xmax)*ds_sc, 57.900*ds_sc, (ds_minus*40.400+ds_xmax)*ds_sc, 58.900*ds_sc);
 		path_[8].quadTo((ds_minus*33.100+ds_xmax)*ds_sc, 58.300*ds_sc, (ds_minus*32.200+ds_xmax)*ds_sc, 53.000*ds_sc);
 		path_[8].quadTo((ds_minus*31.900+ds_xmax)*ds_sc, 48.300*ds_sc, (ds_minus*40.500+ds_xmax)*ds_sc, 45.000*ds_sc);
-
+		
 		// path_[9]  
 		path_[9].moveTo((ds_minus*47.000+ds_xmax)*ds_sc, 45.700*ds_sc);
 		path_[9].quadTo((ds_minus*43.800+ds_xmax)*ds_sc, 48.600*ds_sc, (ds_minus*37.400+ds_xmax)*ds_sc, 47.900*ds_sc);

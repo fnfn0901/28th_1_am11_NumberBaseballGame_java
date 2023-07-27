@@ -1,64 +1,107 @@
 package Numbaseballgame;
 
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.*;
+import java.awt.event.*;
+import java.sql.*;
 
-public class LoginFrame extends JFrame {
-    private JTextField userID;
-    private JPasswordField userPW;
-    private JButton okButton;
-
-    public LoginFrame(){
-        setTitle("로그인");
-        setSize(300,150);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+public class LoginFrame extends JDialog {
+	
+	JPanel backPanel = new JPanel(null);
+	
+	JLabel id_lab = new JLabel("ID: ");
+	JLabel pw_lab = new JLabel("PW: ");
+	
+    JTextField userID_TF = new JTextField(15);
+    JPasswordField userPW_TF = new JPasswordField(15);
+    
+    String id_st;
+	String pw_st;
+    
+    JButton loginButton;
+    JButton backStartFrame;
+    int backStart = 0;
+    
+    PlayFrame pf = null;
+    
+    Database dbd;
+    
+    int isLoginSuccess = 0;
+    
+    public LoginFrame(JFrame playFrame, PlayFrame m) {
+        super(playFrame, "Login", true);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        pf = m;
+        setSize(300, 200);
         setLocationRelativeTo(null);
+
         
-        JPanel panel=new JPanel(new GridLayout(3,2,5,5));
+        backPanel.setSize(300, 200);
+        add(backPanel);
+        
+        JLabel userIDLabel = new JLabel("ID:");
 
-        JLabel userIDJLabel=new JLabel(("ID:"));
-        userID=new JTextField(15);
+        JLabel passwordLabel = new JLabel("PW:");
 
-        JLabel passwordLabel=new JLabel("PW:");
-        userPW=new JPasswordField(15);
+        loginButton = new JButton("Login");
+        loginButton.addActionListener(new ButtonEvent());
+        backStartFrame = new JButton("Back");
+        backStartFrame.addActionListener(new BackButtonEvent());
+        
+        backPanel.add(id_lab);
+        backPanel.add(userID_TF);
+        backPanel.add(pw_lab);
+        backPanel.add(userPW_TF);
+        backPanel.add(loginButton);
+        
+        id_lab.setBounds(10, 10, 50, 50);
+        userID_TF.setBounds(70, 10, 150, 50);
+        pw_lab.setBounds(10, 60, 50, 50);
+        userPW_TF.setBounds(70, 60, 150, 50);
+        loginButton.setBounds(100, 120, 100, 50);
 
-        okButton=new JButton("Login");
-        okButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                login();
-            }
-        });
-
-        panel.add(userIDJLabel);
-        panel.add(userID);
-        panel.add(passwordLabel);
-        panel.add(userPW);
-        panel.add(new JLabel());
-        panel.add(okButton);
-
-        add(panel);
-
-        setVisible(true);
+        dbd = new Database();
+        setVisible(false);
     }
-        
-    private void login(){
-        String enterID=userID.getText();
-        String enterPW=new String(userPW.getPassword());
-
-        //id,pw 빈칸인 경우
-        if(enterID.isEmpty()||enterPW.isEmpty()){
-            JOptionPane.showMessageDialog(this, "아이디와 비밀번호를 바르게 입력해주세요.", "로그인 오류", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        JOptionPane.showMessageDialog(this, "User ID: "+enterID+"\nPassword: "+enterPW, "Login Result", JOptionPane.INFORMATION_MESSAGE);
+    
+    class BackButtonEvent implements ActionListener{
+    	public void actionPerformed(ActionEvent e) {
+    		if (e.getSource() == backStartFrame) {
+    			backStart = 1;
+    			setVisible(false);
+    		}
+    	}
     }
-
-    public static void main(String[] args){
-        SwingUtilities.invokeLater(()->new LoginFrame());
-        
+    
+    class ButtonEvent implements ActionListener{
+    	public void actionPerformed(ActionEvent e) {
+    		JButton b = (JButton)e.getSource();
+    		id_st = userID_TF.getText();
+    		pw_st = "";
+    		for (int i = 0; i < userPW_TF.getPassword().length; i++) {
+    			pw_st = pw_st + userPW_TF.getPassword()[i];
+    		}
+    		if (b.getText().equals("Login")) {
+    			if(id_st.equals("") || pw_st.equals("")) {
+    				JOptionPane.showMessageDialog(null, "Please write your ID and PW", "Login failure", JOptionPane.ERROR_MESSAGE);
+					System.out.println("Login failure > Not write ID and PW");
+					
+    			}
+    			else if(id_st != null && pw_st != null) {
+					if(dbd.logincheck(id_st, pw_st)) {	
+						System.out.println("Login Success");
+						isLoginSuccess = 1;
+						JOptionPane.showMessageDialog(null, "Login Success");
+						setVisible(false);
+					} else {
+						System.out.println("Login Failure > Not Correct Login Info");
+						JOptionPane.showMessageDialog(null, "Login Failure");
+					}
+				}
+    		}
+    	}
+    	
     }
 }

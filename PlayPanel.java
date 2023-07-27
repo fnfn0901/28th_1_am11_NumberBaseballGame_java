@@ -33,6 +33,7 @@ class PlayPanel extends JPanel{
 	BufferedImage bufRecord = new BufferedImage(500, 600, BufferedImage.TYPE_INT_ARGB);
 	BufferedImage bufTimer = new BufferedImage(160, 60, BufferedImage.TYPE_INT_ARGB);
 
+
 	
 
 	ImageIcon iistrikeBall = new ImageIcon("strikeBall.png");
