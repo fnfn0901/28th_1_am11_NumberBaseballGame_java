@@ -64,7 +64,7 @@ public class Database {
 		try {
 			String insertStr = "INSERT INTO user (id, password) VALUES (?, ?)";
 			
-			pstmt = con.prepareStatement(insertStr);
+			PreparedStatement pstmt = con.prepareStatement(insertStr);
 			
 			pstmt.setString(1, id);
 	        pstmt.setString(2, pw);
@@ -133,7 +133,7 @@ public class Database {
 		            ResultSet rs = pstmt6.executeQuery();
 
 		            if (rs.next()) {
-		                bestTime = rs.getInt("level1Time");
+		                bestTime = rs.getInt("level3Time");
 		            }
 
 		        } catch (SQLException e) {
@@ -218,4 +218,3 @@ public class Database {
 	}
 		
  }
-

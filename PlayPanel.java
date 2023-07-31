@@ -151,4 +151,3 @@ class PlayPanel extends JPanel{
 	    
 	}
 }
-

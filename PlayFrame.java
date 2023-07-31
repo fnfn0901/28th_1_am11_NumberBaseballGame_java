@@ -58,6 +58,7 @@ public class PlayFrame {
 	static int level_numCount;
 	
 	// 랜덤으로 주어질 두 수 저장할 배열
+	Random rnd = new Random();
 	static int[] randomNumber = new int[4];
 
 	
@@ -374,8 +375,9 @@ public class PlayFrame {
 	
 	
 	// 컴퓨터가 서로 다른 수를 지정하여 리턴하는 함수
-	static public int[] returnRN() {
+	public int[] returnRN() {
 		//ArrayList<Integer> rnList = new ArrayList<>();
+		/*
 		while(rnList.size()< level_numCount) {
 			Random random = new Random();
 			int rn = random.nextInt(8) + 1;
@@ -386,7 +388,27 @@ public class PlayFrame {
 			randomNumber[i] = rnList.get(i);
 			System.out.println(randomNumber[i]);
 		}
-		return randomNumber;
+		return randomNumber;*/
+		int[] numberList = {1,2,3,4,5,6,7,8,9};
+		
+		int[] randomNumInfunc = {0, 0, 0, 0};
+		
+		for (int i = 0; i < 4; i++) {
+			int rn = rnd.nextInt(8-i);
+			randomNumInfunc[i] = numberList[rn];
+			for(int j = rn; j < 8-1-i; j++) {
+				numberList[j] = numberList[j+1];
+			}
+		}
+		System.out.print("return : ");
+		
+		for (int i = 0; i < 4; i++) {
+			System.out.print(randomNumInfunc[i]);
+		}
+		
+		System.out.println();
+		
+		return randomNumInfunc;
 	
 	}
 	

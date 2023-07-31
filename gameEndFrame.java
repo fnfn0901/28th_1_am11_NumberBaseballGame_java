@@ -176,7 +176,7 @@ public class gameEndFrame extends JDialog {
 
 	  //버튼 추가
 	  panel.add(restartButton);
-	  panel.add(levelButton);
+	  //panel.add(levelButton);
 	  panel.add(endButton);
       
       

@@ -46,7 +46,8 @@ public class JoinFrame extends JDialog {
         userID_TF.setBounds(70, 10, 150, 50);
         pw_lab.setBounds(10, 60, 50, 50);
         userPW_TF.setBounds(70, 60, 150, 50);
-        joinButton.setBounds(10, 120, 130, 40);
+        //joinButton.setBounds(10, 120, 130, 40);
+        joinButton.setBounds(100, 120, 100, 50);
         
         backStartFrame = new JButton("Back");
         backStartFrame.addActionListener(new BackButtonEvent());
@@ -62,7 +63,7 @@ public class JoinFrame extends JDialog {
         backPanel.add(pw_lab);
         backPanel.add(userPW_TF);
         backPanel.add(joinButton);
-        backPanel.add(backStartFrame);
+        //backPanel.add(backStartFrame);
         
         
         joinButton.addActionListener(new ButtonEvent());
@@ -103,6 +104,7 @@ public class JoinFrame extends JDialog {
     					System.out.println("Join Success");
     					isJoinSuccess = 1;
     					JOptionPane.showMessageDialog(null, "Welcome");
+    					setVisible(false);
     				}
     				else {
     					System.out.println("Join failure");
