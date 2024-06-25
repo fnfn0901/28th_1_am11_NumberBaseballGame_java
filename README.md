@@ -12,4 +12,4 @@ https://github.com/fnfn0901/28th_1_am11_NumberBaseballGame_java/assets/89966409/
 
 ## 맡은 역할
 - 로그인/회원가입/게임 정보 화면 제작/구현(Java, Java Swing)
-- 데이터베이스 구축(MySQL)
+- 데이터베이스 구축(MySQL) 
